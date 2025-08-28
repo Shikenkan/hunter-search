@@ -3,59 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <title>Hunter Search System</title>
+
+  <!-- 検索エンジンから完全除外する指示 -->
+  <meta name="robots" content="noindex, nofollow">
+
   <style>
-    body {
-      background-color: #000;
-      color: #0f0;
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
       font-family: monospace;
+      color: #0f0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 1;
+      transition: opacity 2s ease;
+    }
+
+    #wide {
+      z-index: 1;
+    }
+
+    #zoom {
+      z-index: 2;
+      opacity: 0;
+    }
+
+    .search-box {
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
+      opacity: 0;
+      transition: opacity 2s ease;
+      z-index: 3;
     }
-    h1 {
-      font-size: 2em;
-      margin-bottom: 30px;
-      letter-spacing: 2px;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center; /* ← これで中央揃え */
-    }
-    input[type="text"] {
-      width: 300px;
+
+    .search-box input[type="text"] {
       padding: 10px;
       font-size: 1.2em;
       border: 2px solid #0f0;
       background-color: #000;
       color: #0f0;
+      width: 300px;
       margin-bottom: 10px;
     }
-    input[type="submit"] {
+
+    .search-box input[type="submit"] {
       padding: 10px 20px;
-      font-size: 1em;
       background-color: #0f0;
       color: #000;
       border: none;
       cursor: pointer;
-    }
-    img {
-      margin-top: 30px;
-      width: 200px; /* 好きなサイズに変更可 */
+      font-size: 1em;
     }
   </style>
 </head>
 <body>
-  <h1>HUNTER SEARCH SYSTEM</h1>
-  <form action="https://www.google.com/search" method="get" target="_blank">
-    <input type="text" name="q" placeholder="検索ワードを入力">
-    <input type="submit" value="SEARCH">
-  </form>
+  <!-- 背景画像（引き） -->
+  <img id="wide" class="background" src="bar-wide.jpg" alt="Bar Wide View">
 
-  <!-- ここに画像を追加 -->
-  <img src="hunterlogo.png" alt="Hunter Logo">
+  <!-- ズーム画像（カウンター） -->
+  <img id="zoom" class="background" src="bartender.jpg" alt="Bartender Closeup">
+
+  <!-- 検索窓（中央下） -->
+  <div class="search-box" id="searchBox">
+    <form action="https://www.google.com/search" method="get" target="_blank">
+      <input type="text" name="q" placeholder="検索ワードを入力">
+      <input type="submit" value="SEARCH">
+    </form>
+  </div>
+
+  <script>
+    // 3秒後に画像切り替え＋検索窓表示
+    setTimeout(() => {
+      document.getElementById('zoom').style.opacity = '1';
+      document.getElementById('searchBox').style.opacity = '1';
+    }, 3000);
+  </script>
 </body>
 </html>
